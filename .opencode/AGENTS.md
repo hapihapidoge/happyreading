@@ -94,3 +94,7 @@ npm run build  # 生产构建
 - EPUB 使用自定义解析而非 iframe，避免跨域限制
 - 书籍数据存储在浏览器 IndexedDB，刷新后保留
 - PDF.js worker 从 CDN 加载
+
+## Git 约束
+
+- 远程仓库使用 SSH 协议: `git@github.com:hapihapidoge/happyreading.git`

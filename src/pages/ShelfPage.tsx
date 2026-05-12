@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import type { Book } from '../types';
 import type { DragEvent } from 'react';
 import { getAllBooks, saveBook, generateBookId } from '../utils/storage';
+import { parseEpub } from '../utils/epubParser';
 
 export function ShelfPage() {
   const navigate = useNavigate();
@@ -45,6 +46,17 @@ export function ShelfPage() {
       fileType,
       addedAt: Date.now(),
     };
+
+    if (fileType === 'epub') {
+      try {
+        const bookData = await parseEpub(file);
+        book.title = bookData.title;
+        book.author = bookData.author;
+        book.cover = bookData.cover;
+      } catch (e) {
+        console.error('Failed to parse book metadata:', e);
+      }
+    }
 
     await saveBook(book);
     navigate(`/read/${id}`);
